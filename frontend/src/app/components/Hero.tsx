@@ -40,7 +40,7 @@ export default function Hero() {
               <a
                 href="#"
                 target="_blank"
-                className="button flex items-center gap-2 text-gray-600 hover:text-gray-900"
+                className="button flex items-center gap-2 text-gray-400 hover:text-gray-300"
               >
                 <HiDownload />
                 Baixe meu CV
