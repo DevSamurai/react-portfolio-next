@@ -1,4 +1,4 @@
-import { HiDownload } from "react-icons/hi"
+import { HiDownload } from "react-icons/hi";
 
 export default function Hero() {
   return (
@@ -53,5 +53,5 @@ export default function Hero() {
       </section>
       <div className="absolute left-0 -mt-2 h-3 w-1/4 rounded-r-full bg-gradient-to-r from-blue-700 to-blue-600 md:w-1/3" />
     </>
-  )
+  );
 }

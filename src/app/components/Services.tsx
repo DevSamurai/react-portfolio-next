@@ -2,7 +2,7 @@ import {
   HiCommandLine,
   HiComputerDesktop,
   HiDevicePhoneMobile,
-} from "react-icons/hi2"
+} from "react-icons/hi2";
 
 export default function Services() {
   const services = [
@@ -22,7 +22,7 @@ export default function Services() {
       description: "Desenvolvimento de aplicativos Android e iOS.",
       icon: <HiDevicePhoneMobile className="h-12 w-12" />,
     },
-  ]
+  ];
 
   return (
     <section className="container mx-auto my-12 max-w-4xl p-4">
@@ -53,5 +53,5 @@ export default function Services() {
         ))}
       </div>
     </section>
-  )
+  );
 }

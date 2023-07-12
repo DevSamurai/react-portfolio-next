@@ -1,4 +1,4 @@
-import { HiAcademicCap, HiCodeBracketSquare } from "react-icons/hi2"
+import { HiAcademicCap, HiCodeBracketSquare } from "react-icons/hi2";
 
 export default function Skills() {
   const educations = [
@@ -8,7 +8,7 @@ export default function Skills() {
     {
       name: "Curso de Desenvolvimento Mobile | Dev Samurai",
     },
-  ]
+  ];
 
   const skills = [
     {
@@ -31,7 +31,7 @@ export default function Skills() {
       icon: "images/nodejs.svg",
       level: 65,
     },
-  ]
+  ];
 
   return (
     <section className="rounded-br-[80px] bg-gray-300 md:rounded-br-[180px]">
@@ -103,5 +103,5 @@ export default function Skills() {
         </div>
       </div>
     </section>
-  )
+  );
 }

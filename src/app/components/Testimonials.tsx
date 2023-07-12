@@ -1,4 +1,4 @@
-import { FaQuoteLeft } from "react-icons/fa"
+import { FaQuoteLeft } from "react-icons/fa";
 
 export default function Testimonials() {
   return (
@@ -38,5 +38,5 @@ export default function Testimonials() {
         </figcaption>
       </figure>
     </section>
-  )
+  );
 }
