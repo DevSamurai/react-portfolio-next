@@ -1,7 +1,7 @@
 "use client";
 
 import emailjs from "@emailjs/browser";
-import { FormEvent, useRef, useState } from "react";
+import React, { FormEvent, useEffect, useRef, useState } from "react";
 import { FaSpinner, FaWhatsapp } from "react-icons/fa";
 import {
   HiCheckCircle,
@@ -9,11 +9,44 @@ import {
   HiOutlineMapPin,
 } from "react-icons/hi2";
 
+import Author from "../interfaces/Author";
+
+import { getAuthor } from "../services/api";
+
+const AuthorContact = function ({
+  icon,
+  title,
+  url,
+  description,
+}: {
+  icon: React.ReactElement;
+  title: string;
+  url: string;
+  description: string;
+}) {
+  return (
+    <div className="mb-4 flex items-center gap-4 rounded-lg border border-dashed border-gray-400 p-4">
+      {icon}
+      <div>
+        <p className="font-headline font-semibold">{title}</p>
+        <a
+          href={url}
+          target="_blank"
+          className="text-gray-300 underline underline-offset-2"
+        >
+          {description}
+        </a>
+      </div>
+    </div>
+  );
+};
+
 export default function Contact() {
   const form = useRef<HTMLFormElement>(null);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
+  const [author, setAuthor] = useState<Author>();
 
   const sendEmail = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -42,26 +75,13 @@ export default function Contact() {
       );
   };
 
-  const contacts = [
-    {
-      name: "WhatsApp",
-      description: "+55 12 9.999-9999",
-      link: "https://wa.me/5512982041640?text=Olá...",
-      icon: <FaWhatsapp className="h-10 w-10" />,
-    },
-    {
-      name: "Email",
-      description: "joao-test@testemail.com",
-      link: "mailto:joao-test@testemail.com?subject=Olá...",
-      icon: <HiOutlineEnvelope className="h-10 w-10" />,
-    },
-    {
-      name: "São José dos Campos",
-      description: "Centro, 123",
-      link: "https://goo.gl/maps/4yacADQtLB8jz8zn9?coh=178573&entry=tt",
-      icon: <HiOutlineMapPin className="h-10 w-10" />,
-    },
-  ];
+  useEffect(() => {
+    (async () => {
+      const response = await getAuthor();
+      console.log(`author`, response);
+      setAuthor(response);
+    })();
+  }, []);
 
   return (
     <section id="contact" className="bg-blue-700 text-white">
@@ -150,24 +170,33 @@ export default function Contact() {
             </form>
           </div>
           <div className="basis-1/3">
-            {contacts.map((contact, index) => (
-              <div
-                key={`contact-${index}`}
-                className="mb-4 flex items-center gap-4 rounded-lg border border-dashed border-gray-400 p-4"
-              >
-                {contact.icon}
-                <div>
-                  <p className="font-headline font-semibold">{contact.name}</p>
-                  <a
-                    href={contact.link}
-                    target="_blank"
-                    className="text-gray-300 underline underline-offset-2"
-                  >
-                    {contact.description}
-                  </a>
-                </div>
-              </div>
-            ))}
+            {author && (
+              <>
+                <AuthorContact
+                  key="contact-mobile"
+                  icon={<FaWhatsapp className="h-10 w-10" />}
+                  title="WhatsApp"
+                  url={`https://wa.me/${author.mobile}?text=Olá...`}
+                  description={author.mobile}
+                />
+                <AuthorContact
+                  key="contact-email"
+                  icon={<HiOutlineEnvelope className="h-10 w-10" />}
+                  title="E-mail"
+                  url={`mailto:${author.email}?subject=Olá...`}
+                  description={author.email}
+                />
+                <AuthorContact
+                  key="contact-address"
+                  icon={<HiOutlineMapPin className="h-10 w-10" />}
+                  title="Endereço"
+                  url={`http://maps.google.com/maps?z=12&t=m&q=${encodeURI(
+                    author.address
+                  )}`}
+                  description={author.address}
+                />
+              </>
+            )}
           </div>
         </div>
       </div>

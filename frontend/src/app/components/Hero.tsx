@@ -1,6 +1,10 @@
 import { HiDownload } from "react-icons/hi";
 
-export default function Hero() {
+import { getAuthor } from "../services/api";
+
+export default async function Hero() {
+  const { name, role, pitch, resume } = await getAuthor();
+
   return (
     <>
       <section className="rounded-br-[80px] bg-gradient-to-tr from-black to-gray-900 text-white md:rounded-br-[180px]">
@@ -11,23 +15,25 @@ export default function Hero() {
                 Olá, me chamo
               </span>
               <span className="mr-2 font-headline text-5xl font-semibold">
-                João
+                {name.split(" ").shift()}
               </span>
               <span className="font-headline text-5xl font-light text-blue-400">
-                Henrique
+                {name.split(" ").pop()}
               </span>
             </h1>
 
-            <h2 className="mb-6 flex items-center justify-center gap-2 font-semibold md:justify-start">
-              <div className="h-1 w-12 rounded-full bg-blue-800" />
-              Desenvolvedor React.js Front-end
-            </h2>
+            {role && (
+              <h2 className="mb-6 flex items-center justify-center gap-2 font-semibold md:justify-start">
+                <div className="h-1 w-12 rounded-full bg-blue-800" />
+                {role}
+              </h2>
+            )}
 
-            <p className="mb-6 text-center text-gray-400 md:text-left">
-              Sou um desenvolvedor front-end que ama criar coisas para a web.
-              Atualmente trabalho como freelancer e transformo ideias em sites e
-              aplicações web.
-            </p>
+            {pitch && (
+              <p className="mb-6 text-center text-gray-400 md:text-left">
+                {pitch}
+              </p>
+            )}
 
             <div className="flex items-center justify-center gap-2 md:justify-start">
               <a
@@ -36,15 +42,19 @@ export default function Hero() {
               >
                 Fale comigo
               </a>
-              <span className="italic text-gray-500">ou</span>
-              <a
-                href="#"
-                target="_blank"
-                className="button flex items-center gap-2 text-gray-400 hover:text-gray-300"
-              >
-                <HiDownload />
-                Baixe meu CV
-              </a>
+              {resume && (
+                <>
+                  <span className="italic text-gray-500">ou</span>
+                  <a
+                    href={resume}
+                    target="_blank"
+                    className="button flex items-center gap-2 text-gray-400 hover:text-gray-300"
+                  >
+                    <HiDownload />
+                    Baixe meu CV
+                  </a>
+                </>
+              )}
             </div>
           </div>
 

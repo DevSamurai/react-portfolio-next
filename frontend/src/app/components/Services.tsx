@@ -1,28 +1,9 @@
-import {
-  HiCommandLine,
-  HiComputerDesktop,
-  HiDevicePhoneMobile,
-} from "react-icons/hi2";
+import Image from "next/image";
 
-export default function Services() {
-  const services = [
-    {
-      title: "Web",
-      description:
-        "Desenvolvimento de sites e sistemas web estáticos e dinâmicos com React.js, Next.js, HTML5 e CSS3.",
-      icon: <HiComputerDesktop className="h-12 w-12" />,
-    },
-    {
-      title: "Sistemas",
-      description: "Desenvolvimento de sistemas e APIs REST com Node.js.",
-      icon: <HiCommandLine className="h-12 w-12" />,
-    },
-    {
-      title: "Mobile",
-      description: "Desenvolvimento de aplicativos Android e iOS.",
-      icon: <HiDevicePhoneMobile className="h-12 w-12" />,
-    },
-  ];
+import { getServices, getStrapiMediaUrl } from "../services/api";
+
+export default async function Services() {
+  const services = await getServices();
 
   return (
     <section className="container mx-auto my-12 max-w-4xl p-4">
@@ -34,19 +15,29 @@ export default function Services() {
           <span className="mr-2 font-headline text-3xl">Meus</span>
           <span className="font-handwriting text-4xl">Serviços</span>
         </h2>
-        <p className=" text-sm text-gray-600">
-          Posso atender uma gama completa de serviços, do front-end ao back-end
-          com banco de dados e sistemas.
-        </p>
       </div>
 
-      <div className="mt-6 flex flex-col gap-2 md:flex-row">
-        {services.map((service, index) => (
+      <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
+        {services.map(async (service, index) => (
           <div
-            className="basis-1/3 rounded-lg bg-blue-700 p-4 text-white"
+            className="rounded-lg bg-blue-700 p-4 text-white"
             key={`service-${index}`}
           >
-            <div className="mb-2">{service.icon}</div>
+            <div className="mb-2">
+              {service?.icon?.data?.id && (
+                <Image
+                  priority
+                  src={
+                    (await getStrapiMediaUrl(
+                      service?.icon?.data?.attributes?.url
+                    )) || ""
+                  }
+                  width={32}
+                  height={32}
+                  alt={service.title}
+                />
+              )}
+            </div>
             <h3 className="text-xl font-bold">{service.title}</h3>
             <p className="text-sm">{service.description}</p>
           </div>

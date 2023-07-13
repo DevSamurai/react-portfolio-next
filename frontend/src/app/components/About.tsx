@@ -1,4 +1,12 @@
-export default function About() {
+import classNames from "classnames";
+import { differenceInYears } from "date-fns";
+
+import { getAuthor, getStrapiMediaUrl } from "../services/api";
+
+export default async function About() {
+  const { bio, name, birthdate, mobile, email, address, available, photo } =
+    await getAuthor();
+
   return (
     <section className="container mx-auto my-4 max-w-5xl p-4">
       <div className="relative p-4 text-center">
@@ -6,10 +14,7 @@ export default function About() {
           <span className="mr-2 font-headline text-3xl">Sobre</span>
           <span className="font-handwriting text-4xl">Mim</span>
         </h2>
-        <p className="relative text-sm text-gray-600">
-          Tenho mais de 10 projetos executados e gostaria que o próximo seja o
-          seu.
-        </p>
+        {bio && <p className="relative text-sm text-gray-600">{bio}</p>}
         <div className="absolute left-1/2 top-3 z-0 h-10 w-10 rounded-lg bg-blue-100/40" />
       </div>
 
@@ -20,73 +25,116 @@ export default function About() {
             <p>
               <span className="mr-1">Meu nome é</span>
               <span className="font-headline font-bold uppercase text-blue-900">
-                João Henrique
+                {name}
               </span>
             </p>
 
             <table className="mt-4 w-full text-sm">
               <tbody>
-                <tr>
-                  <td className="font-headline font-bold uppercase text-blue-900">
-                    Idade:
-                  </td>
-                  <td>28</td>
-                </tr>
-                <tr>
-                  <td className="font-headline font-bold uppercase text-blue-900">
-                    Celular:
-                  </td>
-                  <td>
-                    <a
-                      href="tel:+551299999999"
-                      className="underline hover:text-blue-800"
-                    >
-                      +55 12 9.999-9999
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="font-headline font-bold uppercase text-blue-900">
-                    Email:
-                  </td>
-                  <td>
-                    <a
-                      href="mailto:joao-test@testemail.com"
-                      className="underline hover:text-blue-800"
-                    >
-                      joao-test@testemail.com
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="font-headline font-bold uppercase text-blue-900">
-                    Endereço:
-                  </td>
-                  <td>
-                    <a
-                      href="https://goo.gl/maps/4yacADQtLB8jz8zn9?coh=178573&entry=tt"
-                      target="_blank"
-                      className="underline hover:text-blue-800"
-                    >
-                      São José dos Campos - SP
-                    </a>
-                  </td>
-                </tr>
+                {birthdate && (
+                  <tr>
+                    <td className="font-headline font-bold uppercase text-blue-900">
+                      Idade:
+                    </td>
+                    <td>
+                      {differenceInYears(new Date(), new Date(birthdate))}
+                    </td>
+                  </tr>
+                )}
+
+                {mobile && (
+                  <tr>
+                    <td className="font-headline font-bold uppercase text-blue-900">
+                      Celular:
+                    </td>
+                    <td>
+                      <a
+                        href={`tel:${mobile}`}
+                        className="underline hover:text-blue-800"
+                      >
+                        {mobile}
+                      </a>
+                    </td>
+                  </tr>
+                )}
+
+                {email && (
+                  <tr>
+                    <td className="font-headline font-bold uppercase text-blue-900">
+                      Email:
+                    </td>
+                    <td>
+                      <a
+                        href={`mailto:${email}`}
+                        className="underline hover:text-blue-800"
+                      >
+                        {email}
+                      </a>
+                    </td>
+                  </tr>
+                )}
+
+                {address && (
+                  <tr>
+                    <td className="font-headline font-bold uppercase text-blue-900">
+                      Endereço:
+                    </td>
+                    <td>
+                      <a
+                        href={`http://maps.google.com/maps?z=12&t=m&q=${encodeURI(
+                          address
+                        )}`}
+                        target="_blank"
+                        className="underline hover:text-blue-800"
+                      >
+                        {address}
+                      </a>
+                    </td>
+                  </tr>
+                )}
+
                 <tr>
                   <td className="font-headline font-bold uppercase text-blue-900">
                     Disponível:
                   </td>
                   <td>
                     <span className="relative flex h-3 w-3">
-                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"></span>
-                      <span className="relative inline-flex h-3 w-3 rounded-full bg-green-500"></span>
+                      <span
+                        className={classNames(
+                          "absolute inline-flex h-full w-full animate-ping rounded-full  opacity-75",
+                          {
+                            "bg-green-400": available,
+                            "bg-red-400": !available,
+                          }
+                        )}
+                      ></span>
+                      <span
+                        className={classNames(
+                          "relative inline-flex h-3 w-3 rounded-full bg-green-500",
+                          {
+                            "bg-green-400": available,
+                            "bg-red-400": !available,
+                          }
+                        )}
+                      ></span>
                     </span>
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <div className="absolute -left-2 -top-4 h-24 w-20 rounded-lg bg-gray-600 bg-[url(https://images.unsplash.com/photo-1601455763557-db1bea8a9a5a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGF2YXRhciUyMHBob3RvfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60)] bg-cover bg-center md:-left-12 md:-top-12 md:h-72 md:w-56"></div>
+          {photo && (
+            <div
+              className="absolute -left-2 -top-4 h-24 w-20 rounded-lg bg-gray-600 bg-cover bg-center bg-no-repeat md:-left-12 md:-top-12 md:h-72 md:w-56"
+              style={{
+                backgroundImage: `url(${
+                  (await getStrapiMediaUrl(
+                    photo?.data?.attributes?.formats?.medium?.url
+                  )) || ""
+                })`,
+              }}
+            ></div>
+          )}
         </div>
       </div>
     </section>
