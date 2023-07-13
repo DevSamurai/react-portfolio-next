@@ -55,31 +55,22 @@ export default function Contact() {
 
     setLoading(true);
 
-    emailjs
-      .sendForm(
-        "service_sf8b2ti",
-        "template_6wgy6nc",
-        form.current,
-        "4GbIsCzVifbY3ve0-"
-      )
-      .then(
-        () => {
-          setSuccess(true);
-          setLoading(false);
-        },
-        (error) => {
-          setError(true);
-          setLoading(false);
-          console.error(error);
-        }
-      );
+    emailjs.sendForm("service_xxx", "template_xxx", form.current, "xxx").then(
+      () => {
+        setSuccess(true);
+        setLoading(false);
+      },
+      (error) => {
+        setError(true);
+        setLoading(false);
+        console.error(error);
+      }
+    );
   };
 
   useEffect(() => {
     (async () => {
-      const response = await getAuthor();
-      console.log(`author`, response);
-      setAuthor(response);
+      setAuthor(await getAuthor());
     })();
   }, []);
 
