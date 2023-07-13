@@ -1,0 +1,34 @@
+{
+  "kind": "collectionType",
+  "collectionName": "educations",
+  "info": {
+    "singularName": "education",
+    "pluralName": "educations",
+    "displayName": "Education",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "course": {
+      "type": "string",
+      "required": true
+    },
+    "school": {
+      "type": "string",
+      "required": true
+    },
+    "startAt": {
+      "type": "date",
+      "required": true
+    },
+    "endAt": {
+      "type": "date"
+    },
+    "inProgress": {
+      "type": "boolean"
+    }
+  }
+}
