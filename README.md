@@ -1,6 +1,12 @@
 # Portfolio React com Next.js 13
 
-Front-end completo para portfólio com [Next.js 13](https://nextjs.org/docs) e [Strapi CMS](https://docs.strapi.io/). Ele foi desenvolvido para o conteúdo da [Master Class #19](https://www.youtube.com/@DevSamurai) da [Dev Samurai](https://devsamurai.com.br).
+Front-end completo para portfólio com [Next.js 13](https://nextjs.org/docs) e [Strapi CMS](https://docs.strapi.io/).
+
+Com este projeto você pode criar um portfólio com um conteúdo totalmente gerenciável, utilizando o Strapi como CMS Headless e estratégias de SEO.
+
+Ele foi desenvolvido para o conteúdo da [Master Class #19](https://www.youtube.com/@DevSamurai) da [Dev Samurai](https://devsamurai.com.br).
+
+![](./docs/screenshot.png)
 
 ## Como funciona
 
